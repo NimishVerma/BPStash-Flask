@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="container">
+    <h1>Register</h1>
+    {{ error }}
+    <p>Please fill in this form to create an account.</p>
+    <hr>
+<meta id="my-data" data-name="{{error}}">
+
+<form class="form" action="" method="post">
+
+    <label for="first_name"><b>First Name</b></label>
+    <input class="form-control is-valid" type="text" placeholder="Enter First Name" name="first_name" required>
+    <div class="invalid-feedback">
+        Looks good!
+      </div>
+    <label for="last_name"><b>Last Name</b></label>
+    <input class="form-control is-valid" type="text" placeholder="Enter Last Name" name="last_name" required>
+    <label for="username"><b>Username</b></label>
+    <input class="form-control is-valid" type="text" placeholder="Enter Desired Username" name="username" required>
+    <label for="email"><b>Email</b></label>
+    <input class="form-control is-valid"  type="text" placeholder="Enter Email" name="email" required>
+
+    <label for="password"><b>Password</b></label>
+    <input class="form-control is-valid" type="password" placeholder="Enter Password" name="password" required>
+
+    <label for="password_repeat"><b>Repeat Password</b></label>
+    <input class="form-control is-valid" type="password" placeholder="Repeat Password" name="password_repeat" required>
+    <hr>
+
+    <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
+    <button type="submit" class="registerbtn">Register</button>
+  </div>
+
+  <div class="container signin">
+    <p>Already have an account? <a href="#">Sign in</a>.</p>
+  </div>
+</form>
+
+<script>
+	var pyData = $('#my-data').data()['name']
+	pyData = pyData.replace(/u'[\}|\,]/g, "ç'").replace(/u'/g, "'").replace(/ç'/g, "u'").replace(/'/g,'"');
+	pyDict = JSON.parse(pyData)
+	console.log(pyDict)
+</script>
+{% endblock %}
