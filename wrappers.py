@@ -4,7 +4,7 @@ def require_api_token(func):
     @wraps(func)
     def check_token(*args, **kwargs):
         # Check to see if it's in their session
-        if 'auth_token' not in session:
+        if session['logged_in'] == False:
             # If it isn't return our access denied message (you can also return a redirect or render_template)
             return redirect('/login')
 
@@ -12,7 +12,6 @@ def require_api_token(func):
         return func(*args, **kwargs)
 
     return check_token
-
 
 
 

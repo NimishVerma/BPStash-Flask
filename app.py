@@ -25,8 +25,12 @@ def index():
 @app.route('/profile')
 @require_api_token
 def get_profile():
-	print session['auth_token']
-	return render_template('profile.html')
+	# print session['logged_in']
+	r = requests.get('http://13.232.122.165/users/profile/{}'.format(session['username']))
+	if r.status_code == 200:
+
+		return render_template('profile.html')
+	return redirect('/setup-profile')
 
 @app.route('/static/images/<int:pid>.jpg')
 def get_image(pid):
@@ -42,11 +46,11 @@ def login_user():
 	if request.method =='POST':
 		username, password = request.form.get('username'), request.form.get('password')
 		r = requests.post(url = base_url+'/users/login/', data={"username":username, "password":password})
-		print r, r.text
-		if r.status_code is 200:
+		print r, r.text, r.cookies, r.headers, r.status_code
+		if r.status_code == 200:
 			token = r.json()['auth_token']
-			# session.pop()
-			session['auth_token'] = token
+			# # session.pop()
+			session['username'] = username
 			session['logged_in'] = True
 			return redirect('/profile')
 	return render_template('login.html')
@@ -79,11 +83,15 @@ def register_user():
 			# session.pop()
 			session['auth_token'] = token
 			session['logged_in'] = True
-			return redirect('/profile')
+			return redirect('/set-')
 		pass
 	return render_template('register.html')
 
 
+@app.route('/setup-profile', methods=['POST','GET'])
+def setup_profile():
+	return render_template('setup-profile.html')
+	pass
 
 # if __name__ == '__main_':
 app.run(debug=True, port=5000) 

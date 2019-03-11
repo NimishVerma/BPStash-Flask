@@ -1,10 +1,80 @@
 {% extends 'base.html' %}
 {% block content %}
-<form action="" method="post">
+<form action="" method="POST">
 	Username<br>
   <input type="text" name="username" ><br>
   Password:<br>
   <input type="password" name="password" ><br><br>
   <input type="submit" value="Submit">
 </form>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+<script type="text/javascript">
+
+
+
+    $('form').submit(function(event) {
+
+      
+        var formData = {
+            'username'              : $('input[name=username]').val(),
+            'password'             : $('input[name=password]').val(),
+
+        };
+$(document).ready(function() {
+        $.ajaxSetup({
+    crossDomain: true,
+    xhrFields: {
+        withCredentials: true
+    },
+        username: 'bpstash',
+        password: 'Password12!'
+    });
+    $.ajax('http://13.232.122.165/users/login/', {
+        method : 'POST',
+    data : formData,
+    crossDomain: true,
+    xhrFields: {withCredentials: true},
+    success: function (data){document.cookie="Authorization=Token ".concat(data['auth_token']);
+    console.log("HELLo")
+        window.location.assign = "localhost:5000/profile";
+        return false;
+     }
+     // error: login_error
+ });
+  //   $.ajax("https:///13.232.122.165/users/setup-profile", {
+  //    method: 'GET',
+  //    xhrFields: { withCredentials: true },
+  //    crossDomain: true,
+  //    // success: whatever_success,
+  //    // error: whatever_error
+  // });
+            event.preventDefault();
+
+        // process the form
+        // $.ajax({
+
+        //     // contentType: "text/plain",
+        //     //  xhrFields: {withCredentials: true},
+        //     // crossDomain: true,
+        //     credentials:'include',
+        //     type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
+        //     url         : 'http://13.232.122.165/users/login/', // the url where we want to POST
+        //     data        : formData, // our data object
+        //     dataType    : 'json', // what type of data do we expect back from the server
+        //                 encode          : true
+        // })
+        //     // using the done promise callback
+        //     .done(function(data) {
+
+        //         // log data to the console so we can see
+        //         console.log(data); 
+        //         // here we will handle errors and validation messages
+        //     });
+
+        // stop the form from submitting the normal way and refreshing the page
+    });
+
+});
+</script>
 {% endblock %}

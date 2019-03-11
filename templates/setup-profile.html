@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+	<form id = "myFrm" class="form" >
+      <label for="pic"><b>Profile Picture</b></label>
+	  <input class="form-control" type="file" name="pic" required>
+<label for="phone_ext"><b>Extension</b></label>
+	  <input class="form-control" type="text" name="phone_ext" required>
+<label for="phone_no"><b>Phone Number</b></label>
+	  <input class="form-control" type="text" name="phone_no" required>
+<label for="date_of_birth"><b>Date of Birth</b></label>
+	  <input class="form-control" type="text" name="date_of_birth" required>
+
+  <button type="submit"> Submit </button>
+</form>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+  $.ajaxSetup({
+             crossDomain: true,
+             xhrFields: {
+                 withCredentials: true
+             }
+         });
+  var a = document.cookie;
+  console.log(a); 
+$("#myFrm").submit(function(e) {
+
+    e.preventDefault(); // avoid to execute the actual submit of the form.
+
+    var form = $(this);
+    
+
+    $.ajax({
+           type: "POST",
+           url: "http://13.232.122.165:8000/users/setup-profile/",
+           credentials: 'include',
+           data: form.serialize(), // serializes the form's elements.
+           success: function(data)
+           {
+               window.location.assign = "localhost:5000/profile";
+           },
+           error: function(data)
+           {
+            console.log(data);
+           }
+
+         });
+   });
+</script>
+{% endblock %}
