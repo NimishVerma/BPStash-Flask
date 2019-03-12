@@ -60,7 +60,7 @@ def login_user():
 def register_user():
 	form = RegistrationForm(request.form)
 	#print request.form
-	print form.errors,form.validate()
+	print (form.errors,form.validate())
 	if request.method=='POST' and form.validate():
 		data = { 
 
