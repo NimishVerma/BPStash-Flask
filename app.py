@@ -19,7 +19,7 @@ app.secret_key = 'o5Mrqx3h9R'
 
 @app.route('/')
 def index():
-	print session
+	#print session
 	return render_template('index.html')
 
 @app.route('/profile')
@@ -46,7 +46,7 @@ def login_user():
 	if request.method =='POST':
 		username, password = request.form.get('username'), request.form.get('password')
 		r = requests.post(url = base_url+'/users/login/', data={"username":username, "password":password})
-		print r, r.text, r.cookies, r.headers, r.status_code
+		print (r, r.text, r.cookies, r.headers, r.status_code)
 		if r.status_code == 200:
 			token = r.json()['auth_token']
 			# # session.pop()
@@ -59,7 +59,7 @@ def login_user():
 @app.route('/register', methods=['POST','GET'])
 def register_user():
 	form = RegistrationForm(request.form)
-	print request.form
+	#print request.form
 	print form.errors,form.validate()
 	if request.method=='POST' and form.validate():
 		data = { 
@@ -72,11 +72,11 @@ def register_user():
 
 				}
 		r = requests.post(url = base_url+'/users/register/', data = data)
-		print r,r.text
+		#print r,r.text
 
 		if r.status_code == 400:
 			error = json.loads(r.text.decode()) 
-			print error
+			#print error
 			return render_template('register.html', error = error)
 		if r.status_code == 201:
 			token = r.json()['auth_token']
