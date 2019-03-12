@@ -93,5 +93,5 @@ def setup_profile():
 	return render_template('setup-profile.html')
 	pass
 
-# if __name__ == '__main_':
-app.run(debug=True, port=5000) 
+if '__name__" == '__main_':
+	app.run(debug=True, port=5000) 
